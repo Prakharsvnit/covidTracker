@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Covid tracker</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2 style="text-align: center;">For Official use only</h2>
+  <form class="form-horizontal" method="POST">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="username">Username:</label>
+      <div class="col-lg-4">
+        <input class="form-control" id="username" placeholder="Enter username" name="username">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="password">Password:</label>
+      <div class="col-lg-4">          
+        <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+      </div>
+    </div>
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+<div class="container">
+  <h2 style="text-align: center;">For Citizens</h2>
+  <div class="col-lg-6">
+    <br>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="control-label col-sm-2">  Name:</label>
+        <div class="col-sm-10">
+          <input class="form-control" name="name" placeholder="Enter name" required="">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Age:</label>
+        <div class="col-sm-10">
+          <input class="form-control" name="age" placeholder="Enter age" required>
+        </div>
+      </div>
+        <div class="form-group">
+        <label class="control-label col-sm-2">Sex:</label>
+        <div class="col-sm-10">
+          <input class="form-control" name="sex" placeholder="Enter sex" required>
+        </div>
+      </div>
+        <div class="form-group">
+        <label class="control-label col-sm-2">State</label>
+        <div class="col-sm-10">
+          <input class="form-control" name="state" placeholder="Enter state" required>
+        </div>
+      </div>
+        <div class="form-group">
+        <label class="control-label col-sm-2">City:</label>
+        <div class="col-sm-10">
+          <input class="form-control" name="city" placeholder="Enter city" required>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-lg-6">
+    <h3>Select from below COVID-19 Symptoms</h3>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">fever</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">Dry cough</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">Fatigue</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">difficulty in breathing</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">chest pain</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">muscle or body ache</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">Headache</label>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" value="">sore throat</label>
+    </div>
+  </div>
+  <div class="col-lg-12" style="padding-top: 20px;">
+    <button type="submit" class="btn btn-default" style="display: block; margin: 0 auto;">Submit</button>
+  </div>
+</div>
+
+</body>
+</html>
