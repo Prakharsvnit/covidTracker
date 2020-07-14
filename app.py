@@ -24,13 +24,15 @@ class citizen_report(db.Model):
     sex = db.Column(db.String(100))
     state = db.Column(db.String(100))
     city = db.Column(db.String(100))
+    symptoms = db.Column(db.String(255))
 
-    def __init__(self, name, age, sex, state, city):
+    def __init__(self, name, age, sex, state, city,symptoms):
         self.name = name
         self.age = age
         self.sex = sex
         self.state = state
         self.city = city
+        self.symptoms = symptoms
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -55,8 +57,10 @@ def insert():
         sex = request.form['sex']
         state = request.form['state']
         city = request.form['city']
-
-        my_report = citizen_report(name,age,sex,state,city)
+        symp = request.form.getlist('symptom')
+        symptoms = ','.join(symp)
+        
+        my_report = citizen_report(name,age,sex,state,city,symptoms)
         db.session.add(my_report)
         db.session.commit()
 
