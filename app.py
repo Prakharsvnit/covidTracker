@@ -104,7 +104,9 @@ def insertPatient():
 
 @app.route('/statistics')
 def statistics():
-    return render_template('statistics.html')
+
+    stats = patient_detail.query.all()
+    return render_template('statistics.html',stats=stats)
 
 @app.route('/patient')
 def patient():
@@ -115,7 +117,8 @@ def report():
 
     if request.method == 'POST':
 
-        result = citizen_report.query.filter_by(phone = request.form['phone']).first()
+        result = citizen_report.query.filter_by(phone = request.form['phone']).all()
         return render_template('report.html',result=result)
+
 
     return render_template('report.html')

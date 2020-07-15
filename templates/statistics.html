@@ -13,6 +13,32 @@
 	    <div class="well text-center">
         	<h1>Covid-19 Statistics</h1>
     	</div>
+    	<table class="table table-bordered">
+    		<thead>
+	    		<tr>
+	    			<th>Serial</th>
+	    			<th>Name</th>
+	    			<th>Age</th>
+	    			<th>Sex</th>
+	    			<th>State</th>
+	    			<th>City</th>
+	    			<th>Status</th>
+	    		</tr>    			
+    		</thead>
+    		<tbody>
+    			{% for row in stats %}
+	    		<tr>
+	    			<td>{{row.id}}</td>
+	    			<td>{{row.name}}</td>
+	    			<td>{{row.age}}</td>
+	    			<td>{{row.sex}}</td>
+	    			<td>{{row.state}}</td>
+	    			<td>{{row.city}}</td>
+	    			<td>{{row.status}}</td>
+	    		</tr>
+	    		{% endfor %}    			
+    		</tbody>
+    	</table>
 	</div>
 </body>
 </html>
