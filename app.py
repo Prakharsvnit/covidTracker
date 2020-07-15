@@ -37,6 +37,23 @@ class citizen_report(db.Model):
         self.symptoms = symptoms
 
 
+class patient_detail(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(100))
+    age = db.Column(db.String(100))
+    sex = db.Column(db.String(100))
+    state = db.Column(db.String(100))
+    city = db.Column(db.String(100))
+    status = db.Column(db.String(100))
+
+    def __init__(self, name, age, sex, state, city, status):
+        self.name = name
+        self.age = age
+        self.sex = sex
+        self.state = state
+        self.city = city
+        self.status = status       
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -50,8 +67,8 @@ def login():
 
     return render_template('index.html')
 
-@app.route('/insert',methods=['POST'])
-def insert():
+@app.route('/insertReport',methods=['POST'])
+def insertReport():
     if request.method == 'POST':
         
         name = request.form['name']
@@ -68,6 +85,26 @@ def insert():
         db.session.commit()
 
         return redirect(url_for('report'))
+
+@app.route('/insertPatient',methods=['POST'])
+def insertPatient():
+    if request.method == 'POST':
+        name = request.form['name']
+        age = request.form['age']
+        sex = request.form.get('sex')
+        state = request.form['state']
+        city = request.form['city']
+        status = request.form.get('status')
+
+        my_detail = patient_detail(name,age,sex,state,city,status)
+        db.session.add(my_detail)
+        db.session.commit()
+
+        return redirect(url_for('statistics'))
+
+@app.route('/statistics')
+def statistics():
+    return render_template('statistics.html')
 
 @app.route('/patient')
 def patient():
