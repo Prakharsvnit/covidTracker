@@ -11,6 +11,8 @@
 <body>
 	<div class="container">
 	    <div class="well text-center">
+	    	<button type="button" class="btn btn-primary" style="float: left;" onclick="window.location.href='{{ url_for('login')}}';">Home</button>
+	    	<button type="button" class="btn btn-primary" style="float: right;" onclick="window.location.href='{{ url_for('patient')}}';">Enter Patient details</button>
         	<h1>Covid-19 Statistics</h1>
     	</div>
     	<table class="table table-bordered">
@@ -42,7 +44,7 @@
 	</div>
 
 	<div class="container" align="left">
-  		<embed type="image/svg+xml" src={{graph_data|safe}} style="max-width: 1000px;"></embed>
+		<embed type="image/svg+xml" src={{chart_data|safe}} style='max-width:1000px;'></embed>
 	</div>
 	
 </body>

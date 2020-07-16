@@ -38,10 +38,16 @@
     </div><br>
     <div class="form-group"><br>
       <label class="control-label col-sm-2">State:</label>
-      <div class="col-sm-5">          
-        <input type="text" class="form-control" name="state" required >
-      </div>
-    </div>
+      <div class="col-sm-5">
+      <select class="form-control" name="state" id="state">
+        <option value="Uttar Pradesh">Uttar Pradesh</option>
+        <option value="Gujarat">Gujarat</option>
+        <option value="Madhya Pradesh">Madhya Pradesh</option>
+        <option value="Maharashtra">Maharashtra</option>
+        <option value="Delhi">Delhi</option>
+      </select>
+        </div>
+    </div><br>
     <div class="form-group"><br>
       <label class="control-label col-sm-2">City:</label>
       <div class="col-sm-5">          
@@ -72,6 +78,10 @@
     </div>
   </form>
 </div>
+</div>
+<div class="container">
+  <button type="button" class="btn btn-primary" style="float: right;" onclick="window.location.href='{{ url_for('statistics')}}';">View Statistics</button>
+  <button type="button" class="btn btn-primary" style="float: left;"onclick="window.location.href='{{ url_for('login')}}';">Home</button>
 </div>
 </body>
 </html>
