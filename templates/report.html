@@ -22,33 +22,42 @@
     </div>
     <br>
     <table class="table table-bordered">
-    		<thead>
-	    		<tr>
-	    			<th>Serial</th>
-	    			<th>Name</th>
-	    			<th>Age</th>
-	    			<th>Sex</th>
-	    			<th>Phone</th>
-	    			<th>State</th>
-	    			<th>City</th>
-	    			<th>Symptoms</th>
-	    		</tr>    			
-    		</thead>
-    		<tbody>
-    			{% for row in result %}
-	    		<tr>
-	    			<td>{{row.id}}</td>
-	    			<td>{{row.name}}</td>
-	    			<td>{{row.age}}</td>
-	    			<td>{{row.sex}}</td>
-	    			<td>{{row.phone}}</td>
-	    			<td>{{row.state}}</td>
-	    			<td>{{row.city}}</td>
-	    			<td>{{row.symptoms}}</td>
-	    		</tr>
-	    		{% endfor %}    			
-    		</tbody>
-    	</table>
+		<thead>
+    		<tr>
+    			<th>Serial</th>
+    			<th>Name</th>
+    			<th>Age</th>
+    			<th>Sex</th>
+    			<th>Phone</th>
+    			<th>State</th>
+    			<th>City</th>
+    			<th>Symptoms</th>
+    		</tr>    			
+		</thead>
+		<tbody>
+			{% for row in result %}
+    		<tr>
+    			<td>{{row.id}}</td>
+    			<td>{{row.name}}</td>
+    			<td>{{row.age}}</td>
+    			<td>{{row.sex}}</td>
+    			<td>{{row.phone}}</td>
+    			<td>{{row.state}}</td>
+    			<td>{{row.city}}</td>
+    			<td>{{row.symptoms}}</td>
+
+    		</tr>
+    		{% endfor %}    			
+		</tbody>
+	</table>
+	{% for row in result %}
+        {% set list = row.symptoms.split(',') %}
+        {% if list|length >= 4 %}
+            <div class="text-center" style="padding: 20px;background-color: #f44336;color: white;">You need to go get tested for Covid-19 at nearest hospital</div>
+        {% else %}
+            <div class="text-center" style="padding: 20px;background-color: #2196F3;;color: white;">You need to take precautions</div>
+        {% endif %} 
+	{% endfor %}
 </div>
 </body>
 </html>
