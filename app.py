@@ -3,7 +3,8 @@ from flask import (
     redirect,
     render_template,
     request,
-    url_for
+    url_for,
+    make_response
 )
 from fpdf import FPDF
 from flask_sqlalchemy import SQLAlchemy
@@ -11,7 +12,7 @@ import pygal
 
 app = Flask(__name__)
 app.secret_key = 'somesecretkeythatonlyishouldknow'
-    
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://prakhar:Password@123@localhost/covidtracker'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -53,7 +54,7 @@ class patient_detail(db.Model):
         self.sex = sex
         self.state = state
         self.city = city
-        self.status = status       
+        self.status = status
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
@@ -62,7 +63,7 @@ def login():
 
         username = request.form['username']
         password = request.form['password']
-        
+
         if username == "Peter" and password == "parker":
             return redirect(url_for('patient'))
 
@@ -71,7 +72,7 @@ def login():
 @app.route('/insertReport',methods=['POST'])
 def insertReport():
     if request.method == 'POST':
-        
+
         name = request.form['name']
         age = request.form['age']
         sex = request.form['sex']
@@ -153,9 +154,9 @@ def report():
             pdf.set_font("")
             pdf.set_font("Arial",size=20)
             pdf.cell(90,20,txt ="Name :",ln=0,align="R")
-            pdf.cell(100,20,txt = row.name,ln=1,align="L")            
+            pdf.cell(100,20,txt = row.name,ln=1,align="L")
             pdf.cell(90,20,txt ="Age :",ln=0,align="R")
-            pdf.cell(100,20,txt = row.age,ln=1,align="L")            
+            pdf.cell(100,20,txt = row.age,ln=1,align="L")
             pdf.cell(90,20,txt ="Sex :",ln=0,align="R")
             pdf.cell(100,20,txt = row.sex,ln=1,align="L")
             pdf.cell(90,20,txt ="Phone :",ln=0,align="R")
@@ -166,9 +167,21 @@ def report():
             pdf.cell(100,20,txt = row.city,ln=1,align="L")
             pdf.set_font("Arial",size=10)
             pdf.cell(50,20,txt ="Symptoms :",ln=0,align="L")
-            pdf.cell(100,20,txt = row.symptoms,ln=1,align="L")            
-            pdf.output('report.pdf','F')
+            pdf.cell(100,20,txt = row.symptoms,ln=1,align="L")
+            pdf.set_font("Arial",size=15)
+            list = row.symptoms.split(',')
+            if len(list) >= 4:
+                a = "You need to get tested for Covid-19 at nearest hospital"
+                pdf.cell(150,20,txt=a,ln=1,align="C")
+            else:
+                b = "You need to take precautions"
+                pdf.cell(100,20,txt=b,ln=1,align="C")
+            pdf.set_font("Arial",size=20)
 
+            response = make_response(pdf.output(dest='S').encode('latin-1'))
+            response.headers.set('Content-Disposition', 'attachment', filename='report' + '.pdf')
+            response.headers.set('Content-Type', 'application/pdf')
+            return response
         return render_template('report.html',result=result)
 
     return render_template('report.html')
