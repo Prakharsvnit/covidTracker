@@ -1,65 +1,12 @@
-from flask import (
-    Flask,
-    redirect,
-    render_template,
-    request,
-    url_for,
-    make_response
-)
+from run import app,db
+from models import citizen_report,patient_detail
+from flask import render_template,redirect,url_for,request,make_response
 from fpdf import FPDF
-from flask_sqlalchemy import SQLAlchemy
 import pygal
-
-app = Flask(__name__)
-app.secret_key = 'somesecretkeythatonlyishouldknow'
-
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://prakhar:Password@123@localhost/covidtracker'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
-class citizen_report(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(100))
-    age = db.Column(db.String(100))
-    sex = db.Column(db.String(100))
-    phone = db.Column(db.String(100))
-    state = db.Column(db.String(100))
-    city = db.Column(db.String(100))
-    symptoms = db.Column(db.String(255))
-
-    def __init__(self, name, age, sex, phone, state, city,symptoms):
-        self.name = name
-        self.age = age
-        self.sex = sex
-        self.phone = phone
-        self.state = state
-        self.city = city
-        self.symptoms = symptoms
-
-
-class patient_detail(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(100))
-    age = db.Column(db.String(100))
-    sex = db.Column(db.String(100))
-    state = db.Column(db.String(100))
-    city = db.Column(db.String(100))
-    status = db.Column(db.String(100))
-
-    def __init__(self, name, age, sex, state, city, status):
-        self.name = name
-        self.age = age
-        self.sex = sex
-        self.state = state
-        self.city = city
-        self.status = status
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-
 
         username = request.form['username']
         password = request.form['password']
@@ -91,6 +38,7 @@ def insertReport():
 @app.route('/insertPatient',methods=['POST'])
 def insertPatient():
     if request.method == 'POST':
+        
         name = request.form['name']
         age = request.form['age']
         sex = request.form.get('sex')
@@ -131,7 +79,6 @@ def statistics():
     line_chart.add('Deceased',[up_deceased,mp_deceased,maha_deceased,guj_deceased,del_deceased])
     chart_data = line_chart.render_data_uri()
 
-
     stats = patient_detail.query.all()
     return render_template('statistics.html',stats=stats,chart_data=chart_data)
 
@@ -145,6 +92,7 @@ def report():
     if request.method == 'POST':
 
         result = citizen_report.query.filter_by(phone = request.form['phone']).all()
+        
         for row in result:
 
             pdf = FPDF()
@@ -169,6 +117,7 @@ def report():
             pdf.cell(50,20,txt ="Symptoms :",ln=0,align="L")
             pdf.cell(100,20,txt = row.symptoms,ln=1,align="L")
             pdf.set_font("Arial",size=15)
+            
             list = row.symptoms.split(',')
             if len(list) >= 4:
                 a = "You need to get tested for Covid-19 at nearest hospital"
@@ -182,11 +131,7 @@ def report():
             response.headers.set('Content-Disposition', 'attachment', filename='report' + '.pdf')
             response.headers.set('Content-Type', 'application/pdf')
             return response
+        
         return render_template('report.html',result=result)
 
     return render_template('report.html')
-
-
-
-if __name__ == "__main__":
-    app.run()
